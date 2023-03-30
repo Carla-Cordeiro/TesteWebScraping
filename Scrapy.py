@@ -74,14 +74,16 @@ def imprimir_informacoes(urf_vaga, nome_vaga, nome_empresa, url_empresa, tipo_co
     print(f'nivel_exp: {nivel_exp}')
     print(f'numero_candidaturas: {numero_candidaturas}')
     print(f'data_postagem_vaga: {data_postagem_vaga}')
-    print(f'horario_scraping: {horario_atual}')
+    print(f'horario_scraping: {horario_scraping}')
     print(f'local_empresa: {local_empresa}')
     print('================================================================================')
 
 
 def percorrer_vagas(vagas_lista):
     vaga_final = []
-    for vaga in vaga_final:
+
+    for vaga in vagas_lista:
+
         sleep(1.5)
         link_vaga = vaga.find_element(By.CSS_SELECTOR,
                                     '[data-tracking-control-name="public_jobs_jserp-result_search-card"]')
@@ -120,12 +122,10 @@ def percorrer_vagas(vagas_lista):
         data_postagem_vaga = navegador.find_element(By.XPATH,
                                                     '//*[@id="main-content"]/section[1]/div/section[2]/div/div[1]/div/h4/div[2]/span')
 
-        # informações da empresa (quantidade de funcionarios e local)
-        # numero_empregados_empresa = navegador.find_element(By.XPATH, '//*[@id="main-content"]/section[1]/div/section[1]/div/dl/div[3]/dd')
         local_empresa = navegador.find_element(By.XPATH,
                                                '//*[@id="main-content"]/section[1]/div/section[2]/div/div[1]/div/h4/div[1]/span[2]')
 
-        horario_scraping = horario_atual
+        horario_scraping = horario_atual()
         vaga_final.append((url_vaga, nome_vaga.text.title(), nome_empresa.text, url_empresa, tipo_contratacao.text,
                            nivel_exp.text, numero_candidaturas.text, data_postagem_vaga.text, horario_scraping,
                            local_empresa.text))
